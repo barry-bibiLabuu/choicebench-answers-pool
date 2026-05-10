@@ -1,0 +1,84 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const postModules = import.meta.glob("../../../content/posts/*.md", { eager: true });
+  return Object.entries(postModules).map(([path, mod]) => {
+    const frontmatter = mod.frontmatter;
+    const slug = frontmatter.slug || path.split("/").pop()?.replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/\.md$/, "");
+    return {
+      params: { slug },
+      props: { post: mod, frontmatter, slug }
+    };
+  });
+}
+
+const { post, frontmatter, slug } = Astro.props;
+const { Content } = post;
+const title = frontmatter.title;
+const description = frontmatter.description;
+const canonical = new URL(`/posts/${slug}/`, Astro.site).href;
+const published = frontmatter.date;
+const faqs = frontmatter.faq || [];
+
+const blogPosting = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  datePublished: published,
+  dateModified: published,
+  mainEntityOfPage: canonical,
+  author: {
+    "@type": "Organization",
+    name: "Choicebench"
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Choicebench",
+    url: Astro.site?.toString()
+  }
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: new URL("/", Astro.site).href },
+    { "@type": "ListItem", position: 2, name: title, item: canonical }
+  ]
+};
+
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Choicebench",
+  url: Astro.site?.toString()
+};
+
+const faqSchema = faqs.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer
+        }
+      }))
+    }
+  : null;
+
+const jsonLd = [blogPosting, breadcrumb, organization, faqSchema].filter(Boolean);
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <article>
+    <p class="meta">{published}</p>
+    <h1>{title}</h1>
+    <p class="lede">{description}</p>
+    <Content />
+  </article>
+</BaseLayout>

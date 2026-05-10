@@ -1,0 +1,23 @@
+{
+  "site": "Choicebench Answers Pool",
+  "url": "https://choicebench-answers-pool.pages.dev",
+  "description": "A static answer library for Generative Engine Optimization, AI search visibility, and answer-first content strategy.",
+  "contentType": "static_html_articles",
+  "topics": [
+    "Generative Engine Optimization",
+    "AI search visibility",
+    "answer-first content",
+    "SEO",
+    "AEO",
+    "GEO"
+  ],
+  "posts": [
+    {
+      "title": "What Is Generative Engine Optimization?",
+      "slug": "what-is-generative-engine-optimization",
+      "url": "https://choicebench-answers-pool.pages.dev/posts/what-is-generative-engine-optimization/",
+      "description": "Generative Engine Optimization is the practice of making content easy for AI answer engines to understand, cite, and recommend while still being useful to human readers.",
+      "date": "2026-05-09"
+    }
+  ]
+}

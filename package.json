@@ -1,0 +1,19 @@
+{
+  "name": "choicebench-answers-pool",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/rss": "4.0.11",
+    "@astrojs/sitemap": "3.5.1",
+    "astro": "5.13.10"
+  },
+  "overrides": {
+    "unstorage": "1.16.1"
+  }
+}

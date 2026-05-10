@@ -1,0 +1,14 @@
+# Choicebench Answers Pool
+
+Choicebench Answers Pool is a static content library for answer-first marketing, Generative Engine Optimization, AI search visibility, and content strategy.
+
+The site publishes crawlable HTML articles designed to be useful to human readers and easy for search and AI answer systems to understand.
+
+Primary content directory:
+- /posts/
+
+Machine-readable index:
+- /ai-index.json
+
+Sitemap:
+- /sitemap-index.xml
