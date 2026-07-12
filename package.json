@@ -6,14 +6,19 @@
   "scripts": {
     "dev": "astro dev",
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
-    "preview": "astro preview"
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "12",
     "@astrojs/rss": "4.0.11",
     "@astrojs/sitemap": "3.5.1",
     "astro": "5.13.10"
   },
   "overrides": {
     "unstorage": "1.16.1"
+  },
+  "devDependencies": {
+    "wrangler": "^4.110.0"
   }
 }
