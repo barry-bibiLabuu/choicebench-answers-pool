@@ -1,19 +1,19 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { allPosts } from "../../lib/posts.js";
 
 export async function getStaticPaths() {
-  const postModules = import.meta.glob("../../../content/posts/*.md", { eager: true });
-  return Object.entries(postModules).map(([path, mod]) => {
-    const frontmatter = mod.frontmatter;
-    const slug = frontmatter.slug || path.split("/").pop()?.replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/\.md$/, "");
+  return allPosts().map((item) => {
+    const frontmatter = item.frontmatter;
+    const slug = item.slug;
     return {
       params: { slug },
-      props: { post: mod, frontmatter, slug }
+      props: { post: item.module, frontmatter, slug, language: item.language, tags: item.tags }
     };
   });
 }
 
-const { post, frontmatter, slug } = Astro.props;
+const { post, frontmatter, slug, language, tags = [] } = Astro.props;
 const { Content } = post;
 const title = frontmatter.title;
 const description = frontmatter.description;
@@ -76,9 +76,14 @@ const jsonLd = [blogPosting, breadcrumb, organization, faqSchema].filter(Boolean
 
 <BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
   <article>
-    <p class="meta">{published}</p>
+    <p class="meta">{language === "zh" ? "中文文章" : "English article"} · {published}</p>
     <h1>{title}</h1>
     <p class="lede">{description}</p>
+    {tags.length ? (
+      <div class="tags article-tags">
+        {tags.slice(0, 8).map((tag) => <span>{tag}</span>)}
+      </div>
+    ) : null}
     <Content />
   </article>
 </BaseLayout>

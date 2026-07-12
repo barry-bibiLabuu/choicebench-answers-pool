@@ -1,21 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { postsByLanguage } from "../lib/posts.js";
 
-const postModules = import.meta.glob("../../content/posts/*.md", { eager: true });
-const posts = Object.entries(postModules)
-  .map(([path, mod]) => {
-    const frontmatter = mod.frontmatter;
-    return {
-      title: frontmatter.title,
-      description: frontmatter.description,
-      date: frontmatter.date,
-      slug: frontmatter.slug || path.split("/").pop()?.replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/\.md$/, "")
-    };
-  })
-  .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+const { all: posts, zh: zhPosts, en: enPosts } = postsByLanguage();
 
-const title = "Choicebench Answers Pool";
-const description = "A static content library for Generative Engine Optimization, AI search visibility, and answer-first marketing pages.";
+const title = "Choicebench Answers Pool | Bilingual Answer Blog";
+const description = "A bilingual, crawlable blog for AI search visibility, GEO content, and practical education decision guides.";
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const jsonLd = {
   "@context": "https://schema.org",
@@ -27,24 +17,98 @@ const jsonLd = {
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
-  <section>
-    <p class="brand">AI answer content library</p>
-    <h1>Choicebench Answers Pool</h1>
-    <p class="lede">
-      Static, crawlable articles built for answer-first education, SEO discovery, and generative engine understanding.
-    </p>
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Bilingual answer blog / 中英文内容库</p>
+      <h1>Readable articles for people, structured pages for AI search.</h1>
+      <p class="lede">
+        Choicebench Answers Pool publishes concise English explainers and Chinese education guides that are easy to read, index, cite, and update.
+      </p>
+      <div class="hero-actions">
+        <a href="#zh">中文文章</a>
+        <a href="#en">English Articles</a>
+      </div>
+    </div>
+    <aside class="snapshot" aria-label="Blog summary">
+      <div>
+        <span>{posts.length}</span>
+        <p>Total posts</p>
+      </div>
+      <div>
+        <span>{zhPosts.length}</span>
+        <p>中文</p>
+      </div>
+      <div>
+        <span>{enPosts.length}</span>
+        <p>English</p>
+      </div>
+    </aside>
   </section>
 
-  <section>
-    <h2>Latest articles</h2>
-    <div style="display: grid; gap: 18px;">
+  <section class="latest">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Latest</p>
+        <h2>Latest articles / 最新文章</h2>
+      </div>
+      <p>{posts.length} crawlable posts published from <code>content/posts</code> and <code>content/blog</code>.</p>
+    </div>
+    <div class="post-grid">
       {posts.map((post) => (
         <a class="card" href={`/posts/${post.slug}/`}>
-          <p class="meta">{post.date}</p>
+          <div class="card-meta">
+            <span>{post.language === "zh" ? "中文" : "English"}</span>
+            <time>{post.date}</time>
+          </div>
           <h3>{post.title}</h3>
           <p>{post.description}</p>
+          {post.tags.length ? (
+            <div class="tags">
+              {post.tags.slice(0, 4).map((tag) => <span>{tag}</span>)}
+            </div>
+          ) : null}
         </a>
       ))}
+    </div>
+  </section>
+
+  <section id="zh" class="language-section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Chinese</p>
+        <h2>中文文章</h2>
+      </div>
+      <p>留学申请、案例判断、规划方法和可执行的决策文章。</p>
+    </div>
+    <div class="post-list">
+      {zhPosts.map((post) => (
+        <a class="post-row" href={`/posts/${post.slug}/`}>
+          <time>{post.date}</time>
+          <strong>{post.title}</strong>
+          <span>{post.description}</span>
+        </a>
+      ))}
+      {!zhPosts.length && <p class="muted">No Chinese posts yet.</p>}
+    </div>
+  </section>
+
+  <section id="en" class="language-section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">English</p>
+        <h2>English Articles</h2>
+      </div>
+      <p>GEO, answer-first content, and AI-search visibility explainers.</p>
+    </div>
+    <div class="post-list">
+      {enPosts.map((post) => (
+        <a class="post-row" href={`/posts/${post.slug}/`}>
+          <time>{post.date}</time>
+          <strong>{post.title}</strong>
+          <span>{post.description}</span>
+        </a>
+      ))}
+      {!enPosts.length && <p class="muted">No English posts yet.</p>}
     </div>
   </section>
 </BaseLayout>

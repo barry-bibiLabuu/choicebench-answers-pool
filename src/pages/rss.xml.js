@@ -1,32 +1,18 @@
 import rss from "@astrojs/rss";
+import { allPosts } from "../lib/posts.js";
 
-const postModules = import.meta.glob("../../content/posts/*.md", { eager: true });
-
-const posts = Object.entries(postModules)
-  .map(([path, mod]) => {
-    const frontmatter = mod.frontmatter;
-    const slug =
-      frontmatter.slug ||
-      path
-        .split("/")
-        .pop()
-        ?.replace(/^\d{4}-\d{2}-\d{2}-/, "")
-        .replace(/\.md$/, "");
-
-    return {
-      title: frontmatter.title,
-      description: frontmatter.description,
-      pubDate: new Date(frontmatter.date),
-      link: `/posts/${slug}/`
-    };
-  })
-  .sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+const posts = allPosts().map((post) => ({
+  title: post.title,
+  description: post.description,
+  pubDate: new Date(post.date),
+  link: `/posts/${post.slug}/`
+}));
 
 export function GET(context) {
   return rss({
     title: "Choicebench Answers Pool",
     description:
-      "A static content library for Generative Engine Optimization, AI search visibility, and answer-first marketing pages.",
+      "A bilingual static blog for Generative Engine Optimization, AI search visibility, and answer-first education pages.",
     site: context.site,
     items: posts
   });
