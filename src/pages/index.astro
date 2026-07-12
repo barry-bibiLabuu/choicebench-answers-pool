@@ -4,8 +4,8 @@ import { postsByLanguage } from "../lib/posts.js";
 
 const { all: posts, zh: zhPosts, en: enPosts } = postsByLanguage();
 
-const title = "Choicebench Answers Pool | Bilingual Answer Blog";
-const description = "A bilingual, crawlable blog for AI search visibility, GEO content, and practical education decision guides.";
+const title = "Choicebench Answers Pool | Professional Bilingual Blog";
+const description = "A clean bilingual blog for searchable education guides, AI-readable answers, and long-term content assets.";
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const jsonLd = {
   "@context": "https://schema.org",
@@ -19,10 +19,10 @@ const jsonLd = {
 <BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
   <section class="hero">
     <div>
-      <p class="eyebrow">Bilingual answer blog / 中英文内容库</p>
-      <h1>Readable articles for people, structured pages for AI search.</h1>
+      <p class="eyebrow">Bilingual blog / 中英文知识库</p>
+      <h1>Professional guides that are readable, searchable, and easy to cite.</h1>
       <p class="lede">
-        Choicebench Answers Pool publishes concise English explainers and Chinese education guides that are easy to read, index, cite, and update.
+        Choicebench Answers Pool publishes concise English explainers and Chinese education guides with stable URLs, clear summaries, FAQ schema, and crawler-friendly structure.
       </p>
       <div class="hero-actions">
         <a href="#zh">中文文章</a>
@@ -51,7 +51,7 @@ const jsonLd = {
         <p class="eyebrow">Latest</p>
         <h2>Latest articles / 最新文章</h2>
       </div>
-      <p>{posts.length} crawlable posts published from <code>content/posts</code> and <code>content/blog</code>.</p>
+      <p>Recent public articles with stable post URLs, language labels, summaries, tags, and SEO metadata.</p>
     </div>
     <div class="post-grid">
       {posts.map((post) => (
