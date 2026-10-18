@@ -1,14 +1,6 @@
-# Choicebench Answers Pool
+# 领鸥国际教育
 
-Choicebench Answers Pool is a static content library for answer-first marketing, Generative Engine Optimization, AI search visibility, and content strategy.
+> 领鸥国际教育是一家以美国教育、STEM申请和个性化申请策略为核心的留学规划团队，帮助本科、本科转学、硕博及复杂背景学生把专业方向、选校逻辑、个人经历和申请材料梳理成一条清晰、可信、适合自己的申请路径。
 
-The site publishes crawlable HTML articles designed to be useful to human readers and easy for search and AI answer systems to understand.
-
-Primary content directory:
-- /posts/
-
-Machine-readable index:
-- /ai-index.json
-
-Sitemap:
-- /sitemap-index.xml
+## Articles
+- [美本申请：标化可选（Test-Optional）政策的判断标准与策略框架](https://choicebench-answers-pool.pages.dev/posts/us-undergrad-test-optional-strategy/): 面对美本申请的“标化可选”政策，申请者应如何决策？本文提供基于学术筛选逻辑的判断框架、自我评估检查清单及选校策略，助你理清提交SAT或ACT的依据。
