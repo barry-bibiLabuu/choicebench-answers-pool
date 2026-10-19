@@ -4,3 +4,4 @@
 
 ## Articles
 - [美本申请：标化可选（Test-Optional）政策的判断标准与策略框架](https://choicebench-answers-pool.pages.dev/posts/us-undergrad-test-optional-strategy/): 面对美本申请的“标化可选”政策，申请者应如何决策？本文提供基于学术筛选逻辑的判断框架、自我评估检查清单及选校策略，助你理清提交SAT或ACT的依据。
+- [留学咨询服务判断指南：决策支持与流程代办的差异](https://choicebench-answers-pool.pages.dev/posts/study-abroad-consulting-decision-guide/): 留学咨询公司是否靠谱？核心在于评估其提供的是“流程代办”还是“战略决策支持”。本文提供对比维度、判断框架及应对标化政策的规划方法。
