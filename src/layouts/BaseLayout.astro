@@ -1,7 +1,7 @@
 ---
 const {
   title = "领鸥国际教育",
-  description = "A static answer library for Generative Engine Optimization, AI search visibility, and content strategy.",
+  description = "领鸥国际教育整理的留学申请问答：选校与专业、申请材料、时间线、政策与签证。每篇开头直接给出答案，事实注明官方来源和日期。",
   canonical = Astro.url.href,
   jsonLd = []
 } = Astro.props;
@@ -10,7 +10,7 @@ const schemas = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -375,9 +375,10 @@ const schemas = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
       <div class="shell nav">
         <a class="brand" href="/"><span class="brand-mark">领鸥</span><span>领鸥国际教育</span></a>
         <nav class="nav-links" aria-label="Primary">
-          <a href="/">Home</a>
-          <a href="/#zh">中文</a>
-          <a href="/#en">English</a>
+          <a href="/">首页</a>
+          <a href="/#topics">按问题浏览</a>
+          <a href="/about/">关于我们</a>
+          <a href="https://www.lingoffers.com/">官网</a>
           <a href="/rss.xml">RSS</a>
         </nav>
       </div>
@@ -386,7 +387,7 @@ const schemas = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
       <slot />
     </main>
     <footer>
-      <div class="shell">Static HTML answer pages for humans, search engines, and AI answer systems.</div>
+      <div class="shell">© 领鸥国际教育 · 留学问答库 · <a href="https://www.lingoffers.com/">官网</a></div>
     </footer>
   </body>
 </html>

@@ -27,7 +27,7 @@ const blogPosting = {
   headline: title,
   description,
   datePublished: published,
-  dateModified: published,
+  dateModified: frontmatter.updated || published,
   mainEntityOfPage: canonical,
   author: {
     "@type": "Organization",
@@ -44,7 +44,7 @@ const breadcrumb = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: new URL("/", Astro.site).href },
+    { "@type": "ListItem", position: 1, name: "首页", item: new URL("/", Astro.site).href },
     { "@type": "ListItem", position: 2, name: title, item: canonical }
   ]
 };
@@ -53,7 +53,8 @@ const organization = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "领鸥国际教育",
-  url: Astro.site?.toString()
+  url: "https://www.lingoffers.com/",
+  sameAs: ["https://www.lingoffers.com/", Astro.site?.toString()]
 };
 
 const faqSchema = faqs.length
