@@ -1,0 +1,67 @@
+# Release scheduled posts when their time comes (GEO workbench).
+# Install once in the site repository at .github/workflows/scheduled-publish.yml.
+# Scheduled posts wait in _scheduled/ (no site builder reads it). Every hour at
+# :05 UTC this moves posts whose geo_publish_at has passed into their
+# geo_target_path and pushes one commit; Cloudflare Pages builds that push.
+# Hours with nothing due make no commit and no build. Optional: add the
+# Cloudflare Pages deploy hook as the secret CLOUDFLARE_DEPLOY_HOOK if the
+# Pages project is not connected through Git integration.
+# Runs in GitHub's cloud: the local machine can be off.
+name: scheduled-publish
+on:
+  schedule:
+    - cron: "5 * * * *"   # every hour at :05 (UTC); builds only when a post is due
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: scheduled-publish
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Move posts whose time has come
+        id: move
+        run: |
+          python3 - <<'PY'
+          import datetime, os, pathlib, re, subprocess
+          now = datetime.datetime.now(datetime.timezone.utc)
+          moved = 0
+          for path in sorted(pathlib.Path("_scheduled").rglob("*.md")):
+              text = path.read_text(encoding="utf-8")
+              at = re.search(r'^geo_publish_at:\s*"?([^"\n]+)"?\s*$', text, re.M)
+              target = re.search(r'^geo_target_path:\s*"?([^"\n]+)"?\s*$', text, re.M)
+              if not at or not target:
+                  continue
+              when = datetime.datetime.fromisoformat(at.group(1).strip().replace("Z", "+00:00"))
+              if when > now:
+                  continue
+              dest = pathlib.Path(target.group(1).strip())
+              if dest.is_absolute() or ".." in dest.parts or dest.parts[:1] == ("_scheduled",):
+                  print(f"skip {path}: unsafe geo_target_path {dest}")
+                  continue
+              dest.parent.mkdir(parents=True, exist_ok=True)
+              body = re.sub(r'^geo_(publish_at|target_path):.*\n', "", text, flags=re.M)
+              dest.write_text(body, encoding="utf-8")
+              path.unlink()
+              subprocess.run(["git", "add", "-A", "--", str(path), str(dest)], check=True)
+              moved += 1
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              out.write(f"moved={moved}\n")
+          print(f"released {moved} post(s)")
+          PY
+      - name: Commit released posts
+        if: steps.move.outputs.moved != '0'
+        run: |
+          git config user.name "geo-scheduled-publish"
+          git config user.email "geo-scheduled-publish@users.noreply.github.com"
+          git commit -m "Release ${{ steps.move.outputs.moved }} scheduled post(s)"
+          git push
+      - name: Trigger Cloudflare Pages build (only when a post was released)
+        if: steps.move.outputs.moved != '0'
+        env:
+          HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: |
+          if [ -n "$HOOK" ]; then curl -fsS -X POST "$HOOK"; fi
