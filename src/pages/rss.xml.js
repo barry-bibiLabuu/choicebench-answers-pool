@@ -10,7 +10,7 @@ const posts = allPosts().map((post) => ({
 
 export function GET(context) {
   return rss({
-    title: "Choicebench Answers Pool",
+    title: "领鸥国际教育",
     description:
       "A bilingual static blog for Generative Engine Optimization, AI search visibility, and answer-first education pages.",
     site: context.site,
