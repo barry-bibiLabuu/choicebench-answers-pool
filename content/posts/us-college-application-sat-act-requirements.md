@@ -22,8 +22,6 @@ faq:
   - question: "咨询前应该准备哪些资料？"
     answer: "先整理个人背景、目标、时间线、预算边界、已有材料和最担心的问题。"
 structured_data_suggestion: "Article + FAQPage"
-geo_publish_at: "2026-11-14T04:50Z"
-geo_target_path: "content/posts/us-college-application-sat-act-requirements.md"
 publishDate: "2026-11-14T12:50+08:00"
 ---
 # 耶鲁宾大恢复强制要求，不交SAT/ACT还能进名校吗？
