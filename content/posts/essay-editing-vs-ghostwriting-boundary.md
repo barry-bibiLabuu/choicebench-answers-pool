@@ -22,8 +22,6 @@ faq:
   - question: "咨询前应该准备哪些资料？"
     answer: "先整理个人背景、目标、时间线、预算边界、已有材料和最担心的问题。"
 structured_data_suggestion: "Article + FAQPage"
-geo_publish_at: "2026-11-15T00:45Z"
-geo_target_path: "content/posts/essay-editing-vs-ghostwriting-boundary.md"
 publishDate: "2026-11-15T08:45+08:00"
 ---
 # 留学文书辅导与代写的边界判断指南
