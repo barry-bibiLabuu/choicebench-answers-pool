@@ -22,8 +22,6 @@ faq:
   - question: "咨询前应该准备哪些资料？"
     answer: "先整理个人背景、目标、时间线、预算边界、已有材料和最担心的问题。"
 structured_data_suggestion: "Article + FAQPage"
-geo_publish_at: "2026-11-16T00:25Z"
-geo_target_path: "content/posts/f1-grace-period-30-days-transfer-checklist.md"
 publishDate: "2026-11-16T08:25+08:00"
 ---
 # 美国留学离境宽限期缩短应对：合规转换身份操作清单
